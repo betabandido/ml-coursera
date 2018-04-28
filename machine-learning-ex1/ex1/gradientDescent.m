@@ -17,11 +17,10 @@ for iter = 1:num_iters
     %       of the cost function (computeCost) and gradient here.
     %
 
-
-
-
-
-
+    residuals = (theta' * X')' - y;
+    for j = 1:length(theta)
+      theta(j) -= alpha * sum(residuals .* X(:, j)) / m;
+    endfor
 
     % ============================================================
 
