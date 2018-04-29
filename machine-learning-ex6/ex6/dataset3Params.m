@@ -9,7 +9,9 @@ function [C, sigma] = dataset3Params(X, y, Xval, yval)
 
 % You need to return the following variables correctly.
 C = 1;
-sigma = 0.3;
+sigma = 0.1;
+
+return
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Fill in this function to return the optimal C and sigma
@@ -23,11 +25,25 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+exploration_values = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
 
+lowest_pred_error = Inf;
 
+for exp_C = exploration_values
+    for exp_sigma = exploration_values
+        model = svmTrain(X, y, exp_C, @(x1, x2) gaussianKernel(x1, x2, exp_sigma));
+        predictions = svmPredict(model, Xval);
+        pred_error = mean(double(predictions ~= yval));
+        if pred_error < lowest_pred_error
+            lowest_pred_error = pred_error;
+            C = exp_C;
+            sigma = exp_sigma;
+        endif
+    endfor
+endfor
 
-
-
+printf('C=%f', C);
+printf('sigma=%f', sigma);
 
 % =========================================================================
 
