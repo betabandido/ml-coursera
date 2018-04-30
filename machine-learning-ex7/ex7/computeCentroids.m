@@ -26,15 +26,15 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-
-
-
-
-
-
+for k = 1:K
+    points = X(find(idx == k), :);
+    if (size(points, 1) > 0)
+        centroids(k, :) = sum(points) / size(points, 1);
+    else
+        centroids(k, :) = X(randi(m));
+    endif
+endfor
 
 % =============================================================
 
-
 end
-
